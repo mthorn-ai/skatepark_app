@@ -1,7 +1,11 @@
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, TextInput } from "react-native";
 import { useRouter } from "expo-router";
 import { useEffect, useState, Suspense } from "react";
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from "expo-sqlite";
+import { NavigationAction, NavigationContainer } from "@react-navigation/native";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function Index() {
   const router = useRouter()
@@ -9,7 +13,7 @@ export default function Index() {
   return (
     <View
       style={{
-        flex: 1,
+        flex: 10,
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -17,7 +21,15 @@ export default function Index() {
       <Suspense fallback={<Text>Loading. . .</Text>}>
         <SQLiteProvider databaseName="myDatabase.db" onInit={migrateDbIfNeeded} useSuspense>
           <Text>Home Page</Text>
-          <Info/>
+          <TextInput
+            placeholder = "login"
+            keyboardType = "email-address"
+            />
+            <TextInput
+            placeholder = "password"
+            keyboardType = "email-address"
+            />
+          {/*<Info/>*/}
         </SQLiteProvider>
       </Suspense>
     </View>
