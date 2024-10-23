@@ -34,12 +34,16 @@ export default function Index() {
             <View
               style={styles.loginContainer}
             >
-              <Text
-                style={styles.title}
-                >
-                Login</Text>
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.buttonStyle}>
+                  <Button title="Login"/>
+                </View>
+                <View style={styles.buttonStyle}>
+                  <Button title="Register"/>
+                </View>
+              </View>
               <TextInput
-                placeholder = "login"
+                placeholder = "username"
                 keyboardType = "email-address"
                 style={styles.input}
                 />
@@ -65,6 +69,11 @@ const styles = StyleSheet.create({
     padding: 0,
     flex: 1,
   },
+  buttonStyle: {
+    height: 40,
+    margin: 7,
+    width: 120,
+  },
   input: {
     height: 40,
     margin: 12,
@@ -78,17 +87,17 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0,
     padding: 100,
     flex: 3,
   },
   pad: {
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0,
     flex: 2,
+    margin: 1,
   },
   logo: {
-    borderColor: 'black',
     borderWidth: 1,
     alignSelf: 'center',
     flex: 1,
