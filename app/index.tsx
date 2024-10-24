@@ -55,7 +55,7 @@ export default function Index() {
                 <TouchableOpacity style={{alignSelf:'center',marginTop:32}} 
                   onPress={()=> router.navigate('../register')}>
                   <Text style={{color:'#FFF',fontSize:17}}>
-                    New to SocialApp? <Text style={{fontWeight:'500',color:'#000000',textDecorationLine:"underline"}}>
+                    Don't have an account? <Text style={{fontWeight:'500',color:'#000000',textDecorationLine:"underline"}}>
                       Sign up
                     </Text>
                   </Text>
