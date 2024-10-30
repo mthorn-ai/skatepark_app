@@ -1,14 +1,9 @@
 import { Text, View, TextInput, StyleSheet, Image, Button } from "react-native";
 import { useRouter } from "expo-router";
-import { useEffect, useState, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from "expo-sqlite";
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
 
 export default function Index() {
-  const router = useRouter()
-
   return (
     <View
       style={{
@@ -19,45 +14,100 @@ export default function Index() {
     >
       <Suspense fallback={<Text>Loading. . .</Text>}>
         <SQLiteProvider databaseName="myDatabase.db" onInit={migrateDbIfNeeded} useSuspense>
-          <View
-            style={styles.parentContainer}
-          >
-            <View
-              style={styles.pad}
-            >
-              <Image
-                style={styles.logo}
-                source={require('../assets/images/app_logo.png')}
-                resizeMode="contain"
-              />
-            </View>
-            <View
-              style={styles.loginContainer}
-            >
-              <Text
-                style={styles.title}
-                >
-                Login</Text>
-              <TextInput
-                placeholder = "login"
-                keyboardType = "email-address"
-                style={styles.input}
-                />
-                <TextInput
-                placeholder = "password"
-                keyboardType = "email-address"
-                style={styles.input}
-                />
-                <Button
-                  onPress={() => router.navigate('../register/page')}
-                  title='Register Here'
-                />
-            </View>
-          </View>
+          <Login/>
         </SQLiteProvider>
       </Suspense>
     </View>
   );
+}
+
+function Login() {
+  const router = useRouter()
+  const db = useSQLiteContext()
+
+  const [username, changeUsernameTxt] = useState("")
+  const [password, changePasswordTxt] = useState("")
+
+  const auth = async (username: string, password: string, db: SQLiteDatabase) => {
+    if (password == null || username == null) {
+      return Promise.reject('Invalid Input');
+    }
+    try {
+      const matchingCreds = await db.getAllAsync<User>('SELECT * FROM users WHERE username = ? AND password = ?', username, password)
+      if (matchingCreds.length == 0) {
+        return Promise.reject('No matching User in Database');
+      } else if (matchingCreds.length > 1) {
+        // FOR DEBUGGING: ERROR when multiple accounts share credentials
+        return Promise.reject('Repeat Creds --> Username: ' + username + '; Password: ' + password);
+      }
+      return Promise.resolve('User is authenticated')
+    } catch(error) {
+      return Promise.reject(error)
+    }
+  }
+
+  const loginHandle = async () => {
+    try {
+      const status = await auth(username, password, db)
+      console.log(status)
+      router.navigate('../user/page')
+    } catch(error) {
+      console.log(error)
+      changeUsernameTxt('')
+      changePasswordTxt('')
+    }
+  }
+
+  return (
+    <View
+      style={styles.parentContainer}
+    >
+      <View
+        style={styles.pad}
+      >
+        <Image
+          style={styles.logo}
+          source={require('../assets/images/app_logo.png')}
+          resizeMode="contain"
+        />
+      </View>
+      <View
+        style={styles.loginContainer}
+      >
+        <Text
+          style={styles.title}
+          >
+          Username</Text>
+        <TextInput
+          placeholder = "login"
+          keyboardType = "email-address"
+          style={styles.input}
+          value={username}
+          onChangeText={changeUsernameTxt}
+        />
+        <TextInput
+          placeholder = "password"
+          keyboardType = "email-address"
+          style={styles.input}
+          value={password}
+          onChangeText={changePasswordTxt}
+        />
+        <Button
+          onPress={loginHandle}
+          title='Login'
+        />
+        <Button
+          onPress={() => router.navigate('../register/page')}
+          title='Register Here'
+        />
+      </View>
+    </View>
+  )
+}
+
+interface User {
+  username: string
+  password: string
 }
 
 const styles = StyleSheet.create({
@@ -94,34 +144,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-interface User {
-  username: string;
-  password: string;
-}
-
-export function Info() {
-  const db = useSQLiteContext();
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    async function setup() {
-      const result = await db.getAllAsync<User>('SELECT * FROM users');
-      setUsers(result);
-    }
-    setup();
-  }, []);
-
-  return (
-    <View >
-      {users.map((user, index) => (
-        <View key={index}>
-          <Text>{`${user.username} - ${user.password}`}</Text>
-        </View>
-      ))}
-    </View>
-  );
-}
 
 async function migrateDbIfNeeded(db: SQLiteDatabase) {
   // FOR DEBUGGING: Reset users TABLE
