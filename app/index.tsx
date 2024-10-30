@@ -50,7 +50,7 @@ function Login() {
     try {
       const status = await auth(username, password, db)
       console.log(status)
-      router.navigate('../user/page')
+      router.navigate('../home')
     } catch(error) {
       console.log(error)
       changeUsernameTxt('')
@@ -97,7 +97,7 @@ function Login() {
           title='Login'
         />
         <Button
-          onPress={() => router.navigate('../register/page')}
+          onPress={() => router.navigate('../register')}
           title='Register Here'
         />
       </View>
