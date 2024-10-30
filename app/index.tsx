@@ -1,4 +1,4 @@
-import { Text, View, TextInput, StyleSheet, Image, Button } from "react-native";
+import { Text, View, TextInput, StyleSheet, Image, Button, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useState, Suspense } from "react";
 import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from "expo-sqlite";
@@ -112,33 +112,54 @@ interface User {
 
 const styles = StyleSheet.create({
   parentContainer: {
+    backgroundColor: "#C4AA3F",
     padding: 0,
     flex: 1,
   },
-  input: {
+  buttonContainer: {
+    height: 50,
+    width: 240,
+    alignContent: "center",
+    paddingTop: 10,
+  },
+
+  buttonStyle: {
+    alignContent: "center",
+    alignSelf: "center",
     height: 40,
-    margin: 12,
+    margin: 7,
+    marginTop: 15,
+    width: 200,
+  },
+
+  input: {
+    backgroundColor: "#FFFFE4",
+    height: 40,
+    margin: 10,
     borderWidth: 1,
     padding: 10,
     width: 240,
   },
+  
   title: {
     fontSize: 50,
     alignSelf: 'center',
   },
   loginContainer: {
     borderColor: 'black',
-    borderWidth: 1,
-    padding: 100,
+    alignContent: "center",
+    borderWidth: 0,
+    paddingTop: 50,
+    paddingHorizontal: 100,
     flex: 3,
   },
   pad: {
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0,
     flex: 2,
+    marginTop: 50,
   },
   logo: {
-    borderColor: 'black',
     borderWidth: 1,
     alignSelf: 'center',
     flex: 1,
