@@ -140,6 +140,85 @@ export default function Home() {
               <Text style={{ color: 'black', fontWeight: 'bold' }}>  12</Text>
             </View>
           </View>
+          <View style={styles.postContainer}>
+            <View style={{flexDirection: 'row'}}>
+            <Image 
+              style={styles.profilePic}
+              source={require('../assets/images/pfp5.png')}
+              />
+              <View style={{flexDirection: 'column', marginLeft: 10}}>
+                <Text style={{fontWeight: 'bold'}}>
+                  Name
+                </Text>
+                <Text>
+                  @username
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.text}>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+            </Text>
+            <Image
+            style={styles.imgStyle}
+            source={require('../assets/images/post_img3.jpg')}
+            />
+            <View style={styles.likeBarInPic}>
+              <AntDesign name="like2" size={20} color={'white'}/>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>  123    </Text>
+              <AntDesign name="message1" size={20} color={'white'}/>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>  12</Text>
+            </View>
+          </View>
+          <View style={styles.postContainer}>
+            <View style={{flexDirection: 'row'}}>
+            <Image 
+              style={styles.profilePic}
+              source={require('../assets/images/pfp6.png')}
+              />
+              <View style={{flexDirection: 'column', marginLeft: 10}}>
+                <Text style={{fontWeight: 'bold'}}>
+                  Name
+                </Text>
+                <Text>
+                  @username
+                </Text>
+              </View>
+              </View>
+            <Text style={styles.text}>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </Text>
+            <View style={styles.likeBar}>
+              <AntDesign name="like2" size={20} color={'black'}/>
+              <Text style={{ color: 'black', fontWeight: 'bold' }}>  123    </Text>
+              <AntDesign name="message1" size={20} color={'black'}/>
+              <Text style={{ color: 'black', fontWeight: 'bold' }}>  12</Text>
+            </View>
+          </View>
+          <View style={styles.postContainer}>
+            <View style={{flexDirection: 'row'}}>
+            <Image 
+              style={styles.profilePic}
+              source={require('../assets/images/pfp7.png')}
+              />
+              <View style={{flexDirection: 'column', marginLeft: 10}}>
+                <Text style={{fontWeight: 'bold'}}>
+                  Name
+                </Text>
+                <Text>
+                  @username
+                </Text>
+              </View>
+              </View>
+            <Text style={styles.text}>
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </Text>
+            <View style={styles.likeBar}>
+              <AntDesign name="like2" size={20} color={'black'}/>
+              <Text style={{ color: 'black', fontWeight: 'bold' }}>  123    </Text>
+              <AntDesign name="message1" size={20} color={'black'}/>
+              <Text style={{ color: 'black', fontWeight: 'bold' }}>  12</Text>
+            </View>
+          </View>
         </ScrollView>
         <View style={styles.bottomButtonContainer}>
           <View style={styles.buttonWrapper}>
