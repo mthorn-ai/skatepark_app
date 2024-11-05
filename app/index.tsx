@@ -90,7 +90,7 @@ function Login() {
         />
         <View style={styles.buttonStyle}>
           <Button 
-            onPress={() => router.navigate('../home')} // onPress={loginHandle}
+            onPress={loginHandle} //onPress={() => router.navigate('../home')} 
             title='Login'
             color={"#2C2C2C"}
           />
