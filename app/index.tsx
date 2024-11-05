@@ -74,10 +74,6 @@ function Login() {
       <View
         style={styles.loginContainer}
       >
-        <Text
-          style={styles.title}
-          >
-          Username</Text>
         <TextInput
           placeholder = "login"
           keyboardType = "email-address"
@@ -92,14 +88,20 @@ function Login() {
           value={password}
           onChangeText={changePasswordTxt}
         />
-        <Button
-          onPress={loginHandle}
-          title='Login'
-        />
-        <Button
-          onPress={() => router.navigate('../register')}
-          title='Register Here'
-        />
+        <View style={styles.buttonStyle}>
+          <Button 
+            onPress={() => router.navigate('../home')} // onPress={loginHandle}
+            title='Login'
+            color={"#2C2C2C"}
+          />
+        </View>
+        <TouchableOpacity style={{alignSelf:'center',marginTop:32}} 
+          onPress={()=> router.navigate('../register')}>
+            <Text style={{fontWeight:'500',color:'#FFFFFF'}}> Don't have an account? 
+              <Text style={{fontWeight:'500',color:'#000000',textDecorationLine:"underline"}}> Sign up
+              </Text>
+            </Text>
+          </TouchableOpacity>
       </View>
     </View>
   )
