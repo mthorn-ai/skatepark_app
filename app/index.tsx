@@ -102,7 +102,7 @@ function Login() {
         />
         <View style={styles.buttonStyle}>
           <Button 
-            onPress={loginHandler} // onPress={() => router.navigate('../admin/home')}
+            onPress={() => router.navigate('../admin/home')} // onPress={loginHandler}
             title='Login'
             color={"#2C2C2C"}
           />

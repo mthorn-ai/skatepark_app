@@ -1,8 +1,9 @@
 import React from 'react';
 import { useRouter } from "expo-router";
-import {StyleSheet, Button, Text, View, Image, ScrollView, StatusBar, TouchableOpacity} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, Button, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Menu, MenuProvider, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 
 
 
@@ -222,18 +223,18 @@ export default function Home() {
         </ScrollView>
         <View style={styles.bottomButtonContainer}>
           <View style={styles.buttonWrapper}>
-            <TouchableOpacity> 
-              <AntDesign name="bells" size={40}/>
-            </TouchableOpacity> 
-          </View>
+              <TouchableOpacity> 
+                <AntDesign name="bells" size={40}/>
+              </TouchableOpacity> 
+            </View>
           <View style={styles.buttonWrapper}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.navigate('./make_post')}>
               <AntDesign name="pluscircle" size={50}/>
             </TouchableOpacity>
           </View>
           <View style={styles.buttonWrapper}>
-            <TouchableOpacity>
-              <AntDesign name="message1" size={40}/>
+            <TouchableOpacity onPress={() => router.navigate('./tutorial_vids')}>
+              <MaterialCommunityIcons name="skateboarding" size={40}/>
             </TouchableOpacity>
           </View>
         </View>
@@ -247,6 +248,12 @@ export default function Home() {
 
 
 const styles = StyleSheet.create({
+  menuContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    marginVertical: 100,
+    marginHorizontal: 100,
+  },
   likeBar: {
     flexDirection:'row',
     marginTop:10,
@@ -266,7 +273,7 @@ const styles = StyleSheet.create({
   imgStyle: {
     resizeMode:'contain', 
     width:'200%',
-    height:'100%',
+    maxHeight:310,
     alignSelf:'center',
     marginTop:10,
   },
@@ -280,7 +287,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
     marginBottom: 20,
-    maxHeight: 450,
+    maxHeight: 400,
     overflow:'hidden',
   },
   parentContainer: {
