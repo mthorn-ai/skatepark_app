@@ -1,14 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Suspense, useState } from "react";
 import { useRouter } from "expo-router";
-import {StyleSheet, Button, Text, View, Image, ScrollView, StatusBar, TouchableOpacity} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { StyleSheet, Button, Text, View, Image, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
+import Post from '../../components/Post';
+import { migrate } from '../../scripts/dbManagement';
+import { SQLiteProvider, useSQLiteContext, type SQLiteDatabase } from "expo-sqlite";
+import type { PropsWithChildren, ReactElement } from 'react';
 
-
-
+type PostInfo = PropsWithChildren<{
+  comment: string
+  imgURL: string
+  likes: number
+  comments: number
+}>;
 
 export default function Home() {
-  const router = useRouter()
+  
+  return (
+    <View
+      style={{
+        flex: 10,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Suspense fallback={<Text>Loading. . .</Text>}>
+        <SQLiteProvider databaseName="myDatabase.db" onInit={migrate} useSuspense>
+          <Page/>
+        </SQLiteProvider>
+      </Suspense>
+    </View>
+  );
+}
+
+function Page() {
+  const router = useRouter();
+  const db = useSQLiteContext();
+
+  const [posts, changePosts] = useState<PostInfo[]>();
+  
+  const getPosts = async () => {
+    const posts = await db.getAllAsync<PostInfo>('SELECT * FROM posts');
+    changePosts(posts);
+  };
+  
+  useEffect(() => {
+    getPosts();
+  });
+  
+  const displayPosts = () => {
+    if (posts) {
+      let myPosts: ReactElement[] = []
+      posts.forEach((post) => {
+        const element = (<Post 
+          comment={post.comment}
+          imgURL={post.imgURL}
+          likes={post.likes}
+          comments={post.comments}
+        />);
+        myPosts.push(element);
+      });
+
+      return myPosts;
+    };
+
+    return;
+  };
+  
   return (
     <SafeAreaProvider>
       <View style={styles.parentContainer}>
@@ -31,36 +91,10 @@ export default function Home() {
             </TouchableOpacity>
           </View>
         </View>
+        
         <ScrollView style={styles.scrollView}>
-          <View style={styles.postContainer}>
-            <View style={{flexDirection: 'row'}}>
-            <Image 
-              style={styles.profilePic}
-              source={require('../../assets/images/pfp1.png')}
-              />
-              <View style={{flexDirection: 'column', marginLeft: 10}}>
-                <Text style={{fontWeight: 'bold'}}>
-                  Name
-                </Text>
-                <Text>
-                  @username
-                </Text>
-              </View>
-              </View>
-            <Text style={styles.text}>
-            this skatepark is really fun
-            </Text>
-            <Image
-            style={styles.imgStyle}
-            source={require('../../assets/images/post_img.jpg')}
-            />
-            <View style={styles.likeBarInPic}>
-              <AntDesign name="like2" size={20} color={'white'}/>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>  123    </Text>
-              <AntDesign name="message1" size={20} color={'white'}/>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>  12</Text>
-            </View>
-          </View>
+          {displayPosts()}
+
           <View style={styles.postContainer}>
             <View style={{flexDirection: 'row'}}>
             <Image 
@@ -240,7 +274,6 @@ export default function Home() {
       </View>
     </SafeAreaProvider>
   );
-
 }
 
 

@@ -23,6 +23,12 @@ export async function migrate(db) {
     await db.runAsync('INSERT INTO users (username, password, email, admin) VALUES (?, ?, ?, ?)', 'alice3', '12345', 'alice3@example.com', 0);
     await db.runAsync('INSERT INTO users (username, password, email, admin) VALUES (?, ?, ?, ?)', 'admin', 'admin', 'admin@example.com', 1);
 
+    await db.execAsync(`
+      PRAGMA journal_mode = 'wal';
+      CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY NOT NULL, comment TEXT NOT NULL, imgURL TEXT, likes INTEGER NOT NULL, comments INTEGER NOT NULL);
+    `);
+    await db.runAsync('INSERT INTO posts (comment, imgURL, likes, comments) VALUES (?, ?, ?, ?)', 'I love this park!', '../../assets/images/post_img.jpg', 300, 20);
+
     await db.execAsync(`PRAGMA user_version = 1`);
     currentDbVersion = 1;
   };

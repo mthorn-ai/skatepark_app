@@ -9,7 +9,7 @@ export default function Post() {
             <Image 
               style={styles.profilePic}
               source={require('../../assets/images/pfp4.png')}
-              />
+            />
             <View style={styles.textContainer}>
                 <TextInput
                 placeholder = "placeholder text :)"
